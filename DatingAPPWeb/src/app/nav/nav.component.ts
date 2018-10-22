@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class NavComponent implements OnInit {
       console.log('logged in succesfully');
     },
     error => {
-      console.log('too bad bro');
+      console.log(error);
     });
   }
   loggedIn() {
