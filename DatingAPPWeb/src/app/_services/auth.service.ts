@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import {map} from 'rxjs/operators';
 export class AuthService {
 
   baseUrl = 'http://localhost:5000/api/auth/';
+  jwtHelper = new JwtHelperService();
+  decodedToken: any;
 
   constructor(private http: HttpClient) {}
 
@@ -18,13 +21,20 @@ login(model: any) {
       const user = response;
       if (user) {
         localStorage.setItem('token', user.token);
+        this.decodedToken = this.jwtHelper.decodeToken(user.token);
+        console.log(this.decodedToken);
       }
     })
   );
   }
   register(model: any) {
     return this.http.post(this.baseUrl + 'register', model);
-
+  }
+  loggedIn() {
+    const token = localStorage.getItem('token');
+    // devuelvo la inversa ya que si es vacio o no es un token o expiró, devuelve true
+    // si es true, tengo que indicar que NO está logueado
+    return !this.jwtHelper.isTokenExpired(token);
 
   }
 
