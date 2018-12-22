@@ -45,7 +45,7 @@ namespace DatingApp.API.Controllers
             var userCreated = _mapper.Map<User>(userToRegister);
             var user = await _authRepository.Register(userCreated, userToRegister.Password);
             var userToReturn = _mapper.Map<UserForDetailedDTO>(user);
-            return StatusCode(201);
+            return CreatedAtRoute("GetUser", new {controller = "Users", id = user.Id} ,userToReturn);
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDTO userToLogin)
