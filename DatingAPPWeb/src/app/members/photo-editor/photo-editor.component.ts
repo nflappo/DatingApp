@@ -55,8 +55,16 @@ export class PhotoEditorComponent implements OnInit {
           isMain: res.isMain
         };
         this.photos.push(photo);
+        if (photo.isMain) {
+          this.updateMainPhoto(photo);
+        }
       }
     };
+  }
+  private updateMainPhoto(photo: Photo) {
+    this.authService.changeMemberPhoto(photo.url);
+    this.authService.currentUser.photoURL = photo.url;
+    localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
   }
   setMainPhoto(photo: Photo) {
     this.userService.setMainPhoto(this.authService.decodedToken.nameid, photo.id).subscribe(() => {
@@ -65,9 +73,7 @@ export class PhotoEditorComponent implements OnInit {
       this.currentMain.isMain = false;
       photo.isMain = true;
       // this.GetMemberPhotoChange.emit(photo.url); it's pointless due to the line below, it is just for educational purposes
-      this.authService.changeMemberPhoto(photo.url);
-      this.authService.currentUser.photoURL = photo.url;
-      localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+      this.updateMainPhoto(photo);
     }, error => {
       this.alertify.error(error);
     });

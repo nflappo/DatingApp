@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
@@ -35,8 +35,8 @@ export class AuthService {
       })
     );
   }
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+  register(user: User) {
+    return this.http.post(this.baseUrl + 'register', user);
   }
 
   loggedIn() {
@@ -48,5 +48,4 @@ export class AuthService {
   changeMemberPhoto(photoUrl: string) {
     this.photoUrl.next(photoUrl);
   }
-
 }
