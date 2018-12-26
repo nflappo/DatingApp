@@ -8,7 +8,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload/file-upload/file-upload.module';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import {TimeAgoPipe} from 'time-ago-pipe';
 
 import { AlertifyService } from './_services/alertify.service';
 import { AuthService } from './_services/auth.service';
@@ -47,7 +47,8 @@ export function tokenGetter() {
       MemberCardComponent,
       MemberDetailComponent,
       MemberEditComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      TimeAgoPipe
    ],
    imports: [
       NgxGalleryModule,
